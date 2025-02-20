@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import joblib 
+import joblib
 
 # Load models
 model = joblib.load("Model.pkl")
@@ -11,17 +11,24 @@ encoder = joblib.load("Encoder.pkl")
 st.title("Student Performance Prediction")
 st.write("A web app to predict student performance for better learning outcomes!")
 
-# User Inputs with Default Values
+# User Inputs
 hours_studied = st.number_input("How many hours did the student study per day?", min_value=0, max_value=24, value=1)
 previous_score = st.number_input("Enter the student's past academic score", min_value=0, max_value=100, value=50)
 sleep_hours = st.number_input("How many hours does the student sleep?", min_value=0, max_value=24, value=6)
 sample_questions_practiced = st.number_input("How many sample question papers has the student practiced?", min_value=0, value=0)
 
 # Categorical Input
-extra_curricular_activities = st.selectbox('Has the student been involved in any extra curricular activities?', ('Yes', 'No'))
+extra_curricular_activities = st.selectbox("Has the student been involved in any extracurricular activities?", ["Yes", "No"])
 
-# Transform categorical data
-extra_curricular_activities = encoder.transform([[extra_curricular_activities]])[0][0]  # Extract scalar value
+# Transform categorical data safely
+try:
+    encoded_value = encoder.transform([[extra_curricular_activities]])  # Ensure it returns valid output
+    if encoded_value.size > 0:
+        extra_curricular_activities = encoded_value[0][0]  # Extract scalar
+    else:
+        st.error("Encoding error: Unexpected input for extra-curricular activities.")
+except Exception as e:
+    st.error(f"Encoding failed: {e}")
 
 # Create DataFrame
 data = pd.DataFrame({
@@ -49,3 +56,4 @@ if st.button("Predict performance"):
         st.warning(f"Student's performance prediction is {round(prediction[0],2)}")
     else:
         st.error(f"Student's performance prediction is {round(prediction[0],2)}")
+
