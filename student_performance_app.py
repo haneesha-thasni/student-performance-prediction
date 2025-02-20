@@ -14,7 +14,7 @@ hours_studied=st.number_input("How many hours did the student study per day?",va
 previous_score=st.number_input("Enter the student's past academic score",value=None,placeholder=" ")
 sleep_hours=st.number_input("How many hours does the student sleep?",value=None,placeholder=" ",value=None,placeholder=" ",max_value=24)
 sample_questions_practiced=st.number_input("How many sample question papers has the student practiced?",value=None,placeholder=" ")
-extra_curricular_activities=st.selectbox('Has the student been involved in any extra curricular activites?',value=None,placeholder=" ",('Yes','No'))
+extra_curricular_activities=st.selectbox('Has the student been involved in any extra curricular activites?',('Yes','No'))
 
 extra_curricular_activities=encoder.transform([[extra_curricular_activities]])
 
