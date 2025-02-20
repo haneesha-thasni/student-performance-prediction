@@ -10,9 +10,9 @@ encoder=joblib.load("Encoder.pkl")
 st.title("Student Performance Prediction")
 st.write("A web app to predict student performance for better learning outcome!")
 
-hours_studied=st.number_input("How many hours did the student study per day?",value=None,placeholder=" ",max_value=24)
+hours_studied=st.number_input("How many hours did the student study per day?",max_value=24,value=None,placeholder=" ")
 previous_score=st.number_input("Enter the student's past academic score",value=None,placeholder=" ")
-sleep_hours=st.number_input("How many hours does the student sleep?",value=None,placeholder=" ",max_value=24)
+sleep_hours=st.number_input("How many hours does the student sleep?",max_value=24,value=None,placeholder=" ")
 sample_questions_practiced=st.number_input("How many sample question papers has the student practiced?",value=None,placeholder=" ")
 extra_curricular_activities=st.selectbox('Has the student been involved in any extra curricular activites?',('Yes','No'))
 
